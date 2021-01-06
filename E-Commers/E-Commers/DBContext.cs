@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class DBContext : DbContext
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Product> Products { get; set; }
     public DBContext(DbContextOptions options) : base(options)
     {
     }

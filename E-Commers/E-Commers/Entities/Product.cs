@@ -2,11 +2,11 @@
 
 namespace E_Commers.Entities
 {
-    public class User
+    public class Product
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Pass { get; set; }
-        DateTime OpenAccountDate { get; set; }
+        public string Desc { get; set; }
+        public string Price { get; set; }
     }
 }
