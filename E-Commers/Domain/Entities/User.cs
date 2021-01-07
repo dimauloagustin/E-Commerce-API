@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace E_Commers.Entities
+namespace Domain.Entities
 {
     public class User
     {
@@ -8,6 +8,6 @@ namespace E_Commers.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
-        DateTime OpenAccountDate { get; set; }
+        public DateTime OpenAccountDate { get; set; }
     }
 }
