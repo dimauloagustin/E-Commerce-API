@@ -1,3 +1,4 @@
+using Application;
 using Infrastructure.Extensions.ServiceBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace E_Commers
                        .AllowAnyHeader();
             }));
 
+            services.AddApplicationLayer();
             services.AddInfrastructureLayer(Configuration);
         }
 

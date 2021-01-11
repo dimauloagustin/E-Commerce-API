@@ -1,4 +1,4 @@
-﻿using Infrastructure.Interfaces;
+﻿using Application.Interfaces.Repositories;
 using Infrastructure.Repository.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

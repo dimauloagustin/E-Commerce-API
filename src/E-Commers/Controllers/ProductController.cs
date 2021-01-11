@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Infrastructure.Interfaces;
+﻿using Application.Interfaces.Repositories;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commers.Controllers

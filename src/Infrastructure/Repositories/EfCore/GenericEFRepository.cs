@@ -1,4 +1,4 @@
-﻿using Infrastructure.Interfaces;
+﻿using Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -70,7 +70,7 @@ namespace Infrastructure.Repository.EfCore
 
         public bool Contains(Expression<Func<T, bool>> predicate)
         {
-            return DbSet.Count(predicate) > 0;
+            return DbSet.Any(predicate);
         }
 
         public virtual T Find(params object[] keys)

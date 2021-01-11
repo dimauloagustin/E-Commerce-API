@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Interfaces
+namespace Application.Interfaces.Repositories
 {
     public interface IBaseRepository<T> : IBaseRepository where T : class
     {

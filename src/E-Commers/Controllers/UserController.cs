@@ -1,12 +1,14 @@
-﻿using Domain.Entities;
-using Infrastructure.Interfaces;
+﻿using Application.Features.User.Commands;
+using Application.Interfaces.Repositories;
+using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commers.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private IUserRepository _repository;
 
@@ -22,10 +24,9 @@ namespace E_Commers.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostUser(User user)
+        public async System.Threading.Tasks.Task<IActionResult> PostUserAsync(CreateUserCommand user)
         {
-            var res = _repository.Add(user);
-            return Ok(res);
+            return Ok(await Mediator.Send(user));
         }
 
         [HttpPut("{id}")]
