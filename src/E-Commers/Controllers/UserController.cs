@@ -9,12 +9,7 @@ namespace E_Commers.Controllers
     [Route("[controller]")]
     public class UserController : BaseApiController
     {
-        private IUserRepository _repository;
-
-        public UserController(IUserRepository repository)
-        {
-            _repository = repository;
-        }
+        public UserController() { }
 
         [HttpGet("{id}")]
         public async System.Threading.Tasks.Task<IActionResult> GetUserAsync(int id)
