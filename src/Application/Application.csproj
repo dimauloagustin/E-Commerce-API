@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Category\Querries\" />
     <Folder Include="Features\User\Querries\" />
   </ItemGroup>
 

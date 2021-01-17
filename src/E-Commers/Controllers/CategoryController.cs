@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Features.Category.Commands;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,41 +7,32 @@ namespace E_Commers.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseApiController
     {
-        private ICategoryRepository _repository;
-
-        public CategoryController(ICategoryRepository repository)
-        {
-            _repository = repository;
-        }
+        public CategoryController() { }
 
         [HttpGet("{id}")]
-        public IActionResult GetCategory(int id)
+        public async System.Threading.Tasks.Task<IActionResult> GetCategoryAsync(int id)
         {
-            return Ok(_repository.Find(id));
+            return Ok(await Mediator.Send(new GetCategoryCommand() { Id = id }));
         }
 
         [HttpPost]
-        public IActionResult PostCategory(Category category)
+        public async System.Threading.Tasks.Task<IActionResult> PostCategoryAsync(CreateCategoryCommand category)
         {
-            var res = _repository.Add(category);
-            return Ok(res);
+            return Ok(await Mediator.Send(category));
         }
 
         [HttpPut("{id}")]
-        public IActionResult EditCategory(int id, Category category)
+        public async System.Threading.Tasks.Task<IActionResult> EditCategoryAsync(int id, UpdateCategoryCommand category)
         {
-            category.Id = id;
-            var res = _repository.Update(category);
-            return Ok(res);
+            return Ok(await Mediator.Send(category.Id = id));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        public async System.Threading.Tasks.Task<IActionResult> DeleteCategoryAsync(int id)
         {
-            var res = _repository.Delete(_repository.Find(id));
-            return Ok(res);
+            return Ok(await Mediator.Send(new DeleteCategoryCommand() { Id = id }));
         }
     }
 }

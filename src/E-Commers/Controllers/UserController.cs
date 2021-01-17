@@ -22,13 +22,13 @@ namespace E_Commers.Controllers
         }
 
         [HttpPut("{id}")]
-        public async System.Threading.Tasks.Task<IActionResult> UpdateUser(int id, UpdateUserCommand user)
+        public async System.Threading.Tasks.Task<IActionResult> UpdateUserAsync(int id, UpdateUserCommand user)
         {
             return Ok(await Mediator.Send(user.Id = id));
         }
 
         [HttpDelete("{id}")]
-        public async System.Threading.Tasks.Task<IActionResult> DeleteUser(int id)
+        public async System.Threading.Tasks.Task<IActionResult> DeleteUserAsync(int id)
         {
             return Ok(await Mediator.Send(new DeleteUserCommand() { Id = id }));
         }
