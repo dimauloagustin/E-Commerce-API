@@ -1,6 +1,4 @@
 ﻿using Application.Features.User.Commands;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commers.Controllers
