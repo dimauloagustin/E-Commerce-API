@@ -9,6 +9,7 @@ namespace Application.Mappings
         public GeneralProfile()
         { 
             CreateMap<CreateUserCommand, Domain.Entities.User>(); 
+
             CreateMap<Domain.Entities.User, UserResponse>();
         }
     }
