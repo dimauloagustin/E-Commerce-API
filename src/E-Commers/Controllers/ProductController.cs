@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Features.Product.Commands;
+using Application.Features.Product.Querries;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,41 +8,38 @@ namespace E_Commers.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseApiController
     {
-        private IProductRepository _repository;
-
-        public ProductController(IProductRepository repository)
-        {
-            _repository = repository;
-        }
+        public ProductController() { }
 
         [HttpGet("{id}")]
-        public IActionResult GetProduct(int id)
+        public async System.Threading.Tasks.Task<IActionResult> GetProductAsync(int id)
         {
-            return Ok(_repository.Find(id));
+            return Ok(await Mediator.Send(new GetProductCommand() { Id = id }));
+        }
+
+        [HttpGet]
+        public async System.Threading.Tasks.Task<IActionResult> GetProductsAsync([FromQuery] int pageSize = 20, [FromQuery] int pageIndex = 0)
+        {
+            return Ok(await Mediator.Send(new GetProductsQuerry() { PageSize = pageSize, PageIndex = pageIndex }));
         }
 
         [HttpPost]
-        public IActionResult PostProduct(Product product)
+        public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProductCommand product)
         {
-            var res = _repository.Add(product);
-            return Ok(res);
+            return Ok(await Mediator.Send(product));
         }
 
         [HttpPut("{id}")]
-        public IActionResult EditProduct(int id, Product product)
+        public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProductCommand product)
         {
-            product.Id = id;
-            var res = _repository.Update(product);
-            return Ok(res);
+            return Ok(await Mediator.Send(product.Id = id));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(int id)
+        public async System.Threading.Tasks.Task<IActionResult> DeleteProductAsync(int id)
         {
-            var res = _repository.Delete(_repository.Find(id));
-            return Ok(res);
+            return Ok(await Mediator.Send(new DeleteProductCommand() { Id = id }));
         }
     }
 }
