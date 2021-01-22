@@ -16,6 +16,7 @@ namespace Infrastructure.Extensions.ServiceBuilder
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ISessionRepository, SessionRepository>();
         }
     }
 }
