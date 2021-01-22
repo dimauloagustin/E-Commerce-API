@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Behaviors;
 using System.Reflection;
+using Application.Services.SessionServices;
 
 namespace Application
 {
@@ -10,6 +11,10 @@ namespace Application
     {
         public static void AddApplicationLayer(this IServiceCollection services)
         {
+            #region services
+            services.AddTransient<SessionService>();
+            #endregion
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(typeof(ValidatorBehavior<,>).Assembly);
