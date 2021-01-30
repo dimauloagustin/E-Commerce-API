@@ -19,9 +19,9 @@ namespace E_Commers.Controllers
         }
 
         [HttpGet]
-        public async System.Threading.Tasks.Task<IActionResult> GetProductsAsync([FromQuery] int pageSize = 20, [FromQuery] int pageIndex = 0)
+        public async System.Threading.Tasks.Task<IActionResult> GetProductsAsync([FromQuery] GetProductsQuerry getProductsQuerry)
         {
-            return Ok(await Mediator.Send(new GetProductsQuerry() { PageSize = pageSize, PageIndex = pageIndex }));
+            return Ok(await Mediator.Send(getProductsQuerry));
         }
 
         [HttpPost]

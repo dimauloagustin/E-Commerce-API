@@ -11,8 +11,8 @@ namespace Application.Features.Product.Querries
 {
     public class GetProductsQuerry : IRequest<List<ProductResponse>>
     {
-        public int PageSize { get; set; }
-        public int PageIndex { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 0;
     }
 
     public class GetProductCommandHandler : IRequestHandler<GetProductsQuerry, List<ProductResponse>>
