@@ -13,6 +13,7 @@ namespace Application.Features.Product.Querries
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 0;
+        public List<int> IncludedCategories { get; set; }
     }
 
     public class GetProductCommandHandler : IRequestHandler<GetProductsQuerry, List<ProductResponse>>
@@ -27,8 +28,16 @@ namespace Application.Features.Product.Querries
 
         public Task<List<ProductResponse>> Handle(GetProductsQuerry request, CancellationToken cancellationToken)
         {
-            var response = _ProductRepository.All().Skip(request.PageIndex * request.PageSize).Take(request.PageSize).Select(r => _mapper.Map<ProductResponse>(r)).ToList();
+            var query = _ProductRepository.All();
+            FilterByCategory(request, query);
+            var response = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).Select(r => _mapper.Map<ProductResponse>(r)).ToList();
             return Task.FromResult(response);
+        }
+
+        private void FilterByCategory(GetProductsQuerry request, IQueryable<Domain.Entities.Product> query)
+        {
+            if (request.IncludedCategories != null)
+                query = query.Where(q => request.IncludedCategories.Contains(q.CategoryId));
         }
     }
 }
