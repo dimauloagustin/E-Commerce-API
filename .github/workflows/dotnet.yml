@@ -19,6 +19,8 @@ jobs:
         dotnet-version: 5.0.x
     - name: Possition in src folder
       run: cd src
+    - name: Test
+      run: ls -f
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
