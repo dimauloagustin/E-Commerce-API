@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ Develop ]
   pull_request:
     branches: [ Develop ]
 
