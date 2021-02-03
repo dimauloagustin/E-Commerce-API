@@ -351,3 +351,5 @@ MigrationBackup/
 
 **/Migrations/*
 **/Migrations/
+
+coveragereport/
