@@ -351,3 +351,6 @@ MigrationBackup/
 
 **/Migrations/*
 **/Migrations/
+
+# coverage reports folder
+coveragereport/
