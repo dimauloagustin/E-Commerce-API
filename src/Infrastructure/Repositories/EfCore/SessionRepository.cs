@@ -1,5 +1,6 @@
 ﻿using Application.Entities;
 using Application.Interfaces.Repositories;
+using Infrastructure.Contexts;
 
 namespace Infrastructure.Repository.EfCore
 {
