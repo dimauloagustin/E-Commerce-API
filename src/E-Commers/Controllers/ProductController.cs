@@ -48,25 +48,10 @@ namespace E_Commers.Controllers
         }
 
         [HttpPost("image")]
-        public IActionResult Upload(IFormFile file)
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public async System.Threading.Tasks.Task<IActionResult> UploadProductImageAsync(IFormFile image)
         {
-            // Extract file name from whatever was posted by browser
-            var fileName = System.IO.Path.GetFileName(file.FileName);
-
-            // If file with same name exists delete it
-            if (System.IO.File.Exists(fileName))
-            {
-                System.IO.File.Delete(fileName);
-            }
-
-            // Create new local file and copy contents of uploaded file
-            using (var localFile = System.IO.File.OpenWrite(fileName))
-            using (var uploadedFile = file.OpenReadStream())
-            {
-                uploadedFile.CopyTo(localFile);
-            }
-
-            return Ok();
+            return Ok(await Mediator.Send(new UploadProductPhotoCommand() { File = image }));
         }
     }
 }
