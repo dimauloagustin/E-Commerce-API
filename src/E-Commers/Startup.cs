@@ -60,6 +60,8 @@ namespace E_Commers
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
