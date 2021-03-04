@@ -5,24 +5,24 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Product.Commands
+namespace Application.Features.Product.Querries
 {
-    public class UploadProductPhotoCommand : IRequest<string>
+    public class UploadProductPhotoQuerry : IRequest<string>
     {
         public IFormFile File { get; set; }
     }
 
-    public class UploadProductPhotoCommandHandler : IRequestHandler<UploadProductPhotoCommand, string>
+    public class UploadProductPhotoQuerryHandler : IRequestHandler<UploadProductPhotoQuerry, string>
     {
         private readonly IHostingEnvironment _environment;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UploadProductPhotoCommandHandler(IHostingEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        public UploadProductPhotoQuerryHandler(IHostingEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _environment = environment;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<string> Handle(UploadProductPhotoCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UploadProductPhotoQuerry request, CancellationToken cancellationToken)
         {
             string path = Path.Combine(_environment.WebRootPath, "Resourses", "Products");
 
