@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System;
+
+namespace Domain.Entities
 {
     public class Product
     {
@@ -10,5 +12,7 @@
         public string ImageUrl { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public bool SoldOut { get; set; }
     }
 }
