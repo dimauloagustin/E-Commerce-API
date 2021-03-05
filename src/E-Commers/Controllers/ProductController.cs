@@ -46,5 +46,12 @@ namespace E_Commers.Controllers
         {
             return Ok(await Mediator.Send(new DeleteProductCommand() { Id = id }));
         }
+
+        [HttpPost("image")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public async System.Threading.Tasks.Task<IActionResult> UploadProductImageAsync(IFormFile image)
+        {
+            return Ok(await Mediator.Send(new UploadProductPhotoQuerry() { File = image }));
+        }
     }
 }

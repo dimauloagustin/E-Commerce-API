@@ -2,8 +2,10 @@ using Application;
 using Infrastructure.Extensions.ServiceBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -21,6 +23,8 @@ namespace E_Commers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllers();
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -57,6 +61,8 @@ namespace E_Commers
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStaticFiles();
 
             app.UseCors("MyPolicy");
 

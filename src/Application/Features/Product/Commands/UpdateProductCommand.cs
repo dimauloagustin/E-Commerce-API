@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product.Commands
 {
-    public class UpdateProductCommand : IRequest<ProductResponse>
+    public class UpdateProductCommand : BaseProductCommand, IRequest<ProductResponse>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int? ParentProductId { get; set; }
     }
 
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductResponse>
