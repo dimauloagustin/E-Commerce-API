@@ -17,7 +17,7 @@ namespace Application
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddMediatR(typeof(ValidatorBehavior<,>).Assembly);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
         }
