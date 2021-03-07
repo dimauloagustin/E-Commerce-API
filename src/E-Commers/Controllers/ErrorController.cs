@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Application.Exceptions.Abstractions;
+using Application.Exceptions.Responses;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,12 +21,19 @@ namespace E_Commers.Controllers
         }
 
         [Route("/error")]
-        public IActionResult Error()
+        public ObjectResult Error()
         {
-            var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            _logger.LogError(context.Error,"Not suported error");
+            var error = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
+            _logger.LogError(error, "Not suported error");
 
-            return Problem();
+            if (error.GetType().IsAssignableTo(typeof(IJsonResultConvertible)))
+            {
+                return ((IJsonResultConvertible)error).ToJsonResult(HttpContext.TraceIdentifier);
+            }
+            else
+            {
+                return BadRequest(new GenericErrorResponse() { RequestId = HttpContext.TraceIdentifier });
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace Application.Features.Category.Commands
 {
     public class CreateCategoryCommand : IRequest<CategoryResponse>
     {
+
+        [Required]
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
     }
