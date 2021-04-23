@@ -48,5 +48,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build
-          dotnet test --no-build --verbosity normal --logger "trx;LogFileName=testresults.trx" --results-directory /TestResults
+          dotnet test --no-build --verbosity normal --logger "trx;LogFileName=testresults.trx"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
