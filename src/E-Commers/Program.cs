@@ -7,6 +7,7 @@ using System.IO;
 
 namespace E_Commers
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
