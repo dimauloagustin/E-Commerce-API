@@ -33,32 +33,19 @@ jobs:
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
       - name: Install SonarCloud scanner
-        working-directory: src
+        #working-directory: src
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: Build and analyze
-        working-directory: src
+        #working-directory: src
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="*.coveragexml" /d:sonar.cs.vstest.reportsPaths="*.trx"
-          dotnet build
-          dotnet test --no-build --verbosity normal --logger "trx;LogFileName=testresults.trx" --collect "Code Coverage"
-          
-          Get-ChildItem -Recurse -Filter "*.coverage" | Foreach-Object {
-            $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"
-            $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)
-            & $env:CodeCoveragePath\CodeCoverage.exe analyze /output:$output $_.FullName 
-          }
-
-          Get-ChildItem -Recurse -Filter "*.coveragexml" | Foreach-Object { 
-              $file = Join-Path -Path $_.Directory -ChildPath $_.Name
-              Copy-Item $file -Destination 'TestsResults'
-          }
-          
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\scripts\RunTestsCoverage.ps1         
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
