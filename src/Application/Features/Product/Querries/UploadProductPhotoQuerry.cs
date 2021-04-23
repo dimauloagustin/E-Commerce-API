@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Application.Features.Product.Querries
 {
     public class UploadProductPhotoQuerry : IRequest<string>
     {
+        [Required]
         public IFormFile File { get; set; }
     }
 

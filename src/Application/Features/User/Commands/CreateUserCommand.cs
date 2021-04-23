@@ -2,6 +2,7 @@
 using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,8 +10,11 @@ namespace Application.Features.User.Commands
 {
     public class CreateUserCommand : IRequest<UserResponse>
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Pass { get; set; }
     }
 

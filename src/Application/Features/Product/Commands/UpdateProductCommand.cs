@@ -9,6 +9,7 @@ namespace Application.Features.Product.Commands
 {
     public class UpdateProductCommand : BaseProductCommand, IRequest<ProductResponse>
     {
+        [Required]
         public int Id { get; set; }
     }
 
