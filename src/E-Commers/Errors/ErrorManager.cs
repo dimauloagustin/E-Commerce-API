@@ -6,7 +6,7 @@ namespace E_Commers.Errors
 {
     public class ErrorManager
     {
-        private Dictionary<Type, ErrorResponse> _mapper;
+        private readonly Dictionary<Type, ErrorResponse> _mapper;
 
         public ErrorManager()
         {

@@ -19,8 +19,10 @@ namespace E_Commers.Errors.ErrorResponses
 
         public virtual ObjectResult GetResult()
         {
-            var res = new ObjectResult(this);
-            res.StatusCode = (int?)HttpStatusCode.InternalServerError;
+            var res = new ObjectResult(this)
+            {
+                StatusCode = (int?)HttpStatusCode.InternalServerError
+            };
             return res;
         }
 
