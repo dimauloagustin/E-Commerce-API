@@ -10,9 +10,9 @@ namespace E_Commers.Errors.ErrorResponses
         public DateTime TimeStamp { get; set; } = DateTime.Now;
         public string RequestId { get; set; }
 
-        public ErrorResponse() { }
+        protected ErrorResponse() { }
 
-        public ErrorResponse(string title)
+        protected ErrorResponse(string title)
         {
             Error = title;
         }
