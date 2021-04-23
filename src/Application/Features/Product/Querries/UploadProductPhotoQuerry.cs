@@ -10,7 +10,6 @@ namespace Application.Features.Product.Querries
 {
     public class UploadProductPhotoQuerry : IRequest<string>
     {
-        [Required]
         public IFormFile File { get; set; }
     }
 
