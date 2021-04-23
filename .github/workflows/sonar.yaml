@@ -47,6 +47,6 @@ jobs:
         shell: powershell
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.7
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/*.cobertura.xml"
-          .\scripts\RunTestsCoverage.ps1         
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml"
+          dotnet test src --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
