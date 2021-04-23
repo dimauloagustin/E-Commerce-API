@@ -44,7 +44,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+          echo "${{ secrets.SONAR_TOKEN }}"
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"dimauloagustin_E-Commerce-API" /o:"dimauloagustin" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          echo ${{ secrets.SONAR_TOKEN }}
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
