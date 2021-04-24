@@ -8,7 +8,6 @@ namespace E_Commers.Errors.ErrorResponses
     {
         public string Error { get; set; }
         public DateTime TimeStamp { get; protected set; }
-        public string RequestId { get; set; }
 
         protected ErrorResponse() { }
 
