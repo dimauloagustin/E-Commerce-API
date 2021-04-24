@@ -23,10 +23,10 @@ namespace E_Commers.Errors
 
         public IErrorResponse GetResponse(Exception ex)
         {
-            return GetError(ex).FillFromException(ex);
+            return GetError(ex).SetTimeStamp(DateTime.Now).FillFromException(ex);
         }
 
-        private ErrorResponse GetError (Exception ex)
+        private ErrorResponse GetError(Exception ex)
         {
             return _mapper.GetValueOrDefault(ex.GetType()) ?? new GenericErrorResponse();
         }

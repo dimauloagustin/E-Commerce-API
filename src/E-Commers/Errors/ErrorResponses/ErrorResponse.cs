@@ -7,7 +7,7 @@ namespace E_Commers.Errors.ErrorResponses
     public abstract class ErrorResponse : IErrorResponse
     {
         public string Error { get; set; }
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
+        public DateTime TimeStamp { get; protected set; }
         public string RequestId { get; set; }
 
         protected ErrorResponse() { }
@@ -28,6 +28,12 @@ namespace E_Commers.Errors.ErrorResponses
 
         public virtual IErrorResponse FillFromException(Exception ex)
         {
+            return this;
+        }
+
+        public ErrorResponse SetTimeStamp(DateTime time)
+        {
+            TimeStamp = time;
             return this;
         }
     }
