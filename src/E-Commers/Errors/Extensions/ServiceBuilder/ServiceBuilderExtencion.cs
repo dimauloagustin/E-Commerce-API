@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers.Errors.Extensions.ServiceBuilder
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceBuilderExtencion
     {
         public static void AddErrorManager(this IServiceCollection services)
