@@ -2,6 +2,7 @@
 using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Application.Features.Product.Commands
 {
     public class UpdateProductCommand : BaseProductCommand, IRequest<ProductResponse>
     {
+        [Required]
         public int Id { get; set; }
     }
 

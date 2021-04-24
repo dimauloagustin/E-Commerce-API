@@ -3,9 +3,11 @@ using Application.Features.Product.Querries;
 using Application.Features.Product.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiController]
     [Produces("application/json")]
     [Route("[controller]")]

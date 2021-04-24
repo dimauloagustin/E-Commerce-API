@@ -1,17 +1,20 @@
-﻿using Application.Entities;
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using Application.Features.Login.Responses;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Services.SessionServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Features.Login
 {
     public class LoginUserService : IRequest<LoginResponse>
     {
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Pass { get; set; }
     }
 

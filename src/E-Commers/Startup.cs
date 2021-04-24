@@ -1,4 +1,5 @@
 using Application;
+using E_Commers.Errors.Extensions.ServiceBuilder;
 using Infrastructure.Extensions.ServiceBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -52,6 +55,8 @@ namespace E_Commers
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddErrorManager();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

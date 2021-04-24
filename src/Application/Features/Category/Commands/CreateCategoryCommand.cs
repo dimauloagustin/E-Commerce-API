@@ -10,7 +10,6 @@ namespace Application.Features.Category.Commands
 {
     public class CreateCategoryCommand : IRequest<CategoryResponse>
     {
-
         [Required]
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
