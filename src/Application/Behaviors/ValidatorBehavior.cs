@@ -1,7 +1,9 @@
 ﻿using Application.Exceptions;
+using Application.Exceptions.Serializables;
 using MediatR;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
