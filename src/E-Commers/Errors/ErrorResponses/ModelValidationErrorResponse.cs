@@ -1,13 +1,13 @@
 ﻿using Application.Exceptions;
+using Application.Exceptions.Serializables;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace E_Commers.Errors.ErrorResponses
 {
     public class ModelValidationErrorResponse : ErrorResponse
     {
-        public List<ValidationResult> ValidationErrors { get; set; }
+        public List<SerializableValidationResult> ValidationErrors { get; set; }
 
         public ModelValidationErrorResponse() : base("Model validation error")
         {
