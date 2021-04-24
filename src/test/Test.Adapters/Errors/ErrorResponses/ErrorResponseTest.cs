@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 
 namespace Test.Adapters.Errors.ErrorResponses
@@ -19,6 +20,17 @@ namespace Test.Adapters.Errors.ErrorResponses
             ErrorResponseMock erm = new ErrorResponseMock();
 
             Assert.Equal((int)HttpStatusCode.InternalServerError, erm.GetResult().StatusCode);
+        }
+
+        [Fact]
+        public void Should_set_time_stamp()
+        {
+            ErrorResponseMock erm = new ErrorResponseMock();
+            DateTime time = DateTime.Now;
+
+            erm.SetTimeStamp(time);
+
+            Assert.Equal(time, erm.TimeStamp);
         }
     }
 }
