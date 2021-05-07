@@ -11,56 +11,55 @@ using Xunit;
 
 namespace Test.Infrastructure.Services
 {
-    public class ImageServiceTest
+    public class LinkProviderTest
     {
-        private readonly Mock<IHostingEnvironment> _hostingEnviromentMock;
-        private readonly Mock<IFileSystemProvider> _fileSistemMock;
-        private readonly Mock<IFileStreamFactory> _fileStreamFactoryMock;
+        private const string _scheme = "https";
+        private const string _host = "testhost";
+        private readonly Mock<IHttpContextAccessor> _httpContextAccessor;
 
-        public ImageServiceTest()
+        public LinkProviderTest()
         {
-            _hostingEnviromentMock = new Mock<IHostingEnvironment>();
-            _hostingEnviromentMock.Setup(_ => _.WebRootPath).Returns("");
+            var requestMock = new Mock<HttpRequest>();
+            requestMock.Setup(_ => _.Scheme).Returns(_scheme);
+            requestMock.Setup(_ => _.Host).Returns(new HostString(_host));
 
-            _fileSistemMock = new Mock<IFileSystemProvider>();
-            _fileSistemMock.Setup(_ => _.Exists(It.IsAny<string>())).Returns(true);
+            var httpContextMock = new Mock<HttpContext>();
+            httpContextMock.Setup(_ => _.Request).Returns(requestMock.Object);
 
-            _fileStreamFactoryMock = new Mock<IFileStreamFactory>();
-            _fileStreamFactoryMock.Setup(_ => _.CreateFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(new MemoryStream());
+            _httpContextAccessor = new Mock<IHttpContextAccessor>();
+            _httpContextAccessor.Setup(_ => _.HttpContext).Returns(httpContextMock.Object);
         }
 
         [Fact]
-        public void Should_save_the_file()
+        public void Should_retrive_scheme()
         {
             // Arrange
             var fileMock = new Mock<IFormFile>();
             fileMock.Setup(_ => _.CopyToAsync(It.IsNotNull<Stream>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<object>(null));
 
+            var service = new LinkProvider(_httpContextAccessor.Object);
+
             // Act
-            var res = Task.Run(() => new ImageService(_hostingEnviromentMock.Object, _fileSistemMock.Object, _fileStreamFactoryMock.Object).SaveFileAsync(fileMock.Object, default)).Result;
+            var res = service.Scheme;
 
             // Assert
-            fileMock.Verify(_ => _.CopyToAsync(It.IsNotNull<Stream>(), It.IsAny<CancellationToken>()), Times.Once);
-            Assert.NotNull(res);
+            Assert.Equal(_scheme, res);
         }
 
         [Fact]
-        public void Should_create_directory()
+        public void Should_retrive_host()
         {
             // Arrange
-            var customFileSistemMock = new Mock<IFileSystemProvider>();
-            customFileSistemMock.Setup(_ => _.Exists(It.IsAny<string>())).Returns(false);
-            customFileSistemMock.Setup(_ => _.CreateDirectory(It.IsAny<string>())).Returns(new Mock<IDirectoryInfo>().Object);
-
             var fileMock = new Mock<IFormFile>();
             fileMock.Setup(_ => _.CopyToAsync(It.IsNotNull<Stream>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<object>(null));
 
+            var service = new LinkProvider(_httpContextAccessor.Object);
+
             // Act
-            var res = Task.Run(() => new ImageService(_hostingEnviromentMock.Object, customFileSistemMock.Object, _fileStreamFactoryMock.Object).SaveFileAsync(fileMock.Object, default)).Result;
+            var res = service.Host;
 
             // Assert
-            customFileSistemMock.Verify(_ => _.CreateDirectory(It.IsAny<string>()), Times.Once);
-            Assert.NotNull(res);
+            Assert.Equal(_host, res);
         }
     }
 }
