@@ -6,14 +6,15 @@ using Domain.Entities;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Spv.ProjectName.Test.Application
+namespace Test.Application.Features.Products.Queries
 {
     public class GetProductsQueryTest
     {
         [Fact]
-        public async void Should_get_all_products()
+        public void Should_get_all_products()
         {
             // Arrange
             var command = new GetProductsQuerry();
@@ -34,7 +35,7 @@ namespace Spv.ProjectName.Test.Application
             fakeRepo.Setup(m => m.All()).Returns(products);
 
             // Act
-            var res = await new GetProductCommandHandler(fakeRepo.Object, mapper).Handle(command, default);
+            var res = Task.Run(() => new GetProductCommandHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
 
             // Assert
             fakeRepo.Verify(x => x.All(), Times.Once());
