@@ -8,9 +8,11 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Extensions.ServiceBuilder
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceBuilderExtencion
     {
         public static void AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
