@@ -86,7 +86,7 @@ namespace E_Commers
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            //TODO - Add Authorization
 
             app.UseEndpoints(endpoints =>
             {
