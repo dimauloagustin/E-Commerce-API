@@ -6,25 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Product.Commands
+namespace Application.Features.Product
 {
-    public class UpdateProductCommand : BaseProductCommand, IRequest<ProductResponse>
+    public class UpdateProduct : BaseProduct, IRequest<ProductResponse>
     {
         [Required]
         public int Id { get; set; }
     }
 
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductResponse>
+    public class UpdateProductCommand : IRequestHandler<UpdateProduct, ProductResponse>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
-        public UpdateProductCommandHandler(IProductRepository ProductRepository, IMapper mapper)
+        public UpdateProductCommand(IProductRepository ProductRepository, IMapper mapper)
         {
             _ProductRepository = ProductRepository;
             _mapper = mapper;
         }
 
-        public Task<ProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public Task<ProductResponse> Handle(UpdateProduct request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Domain.Entities.Product>(request);
             _ProductRepository.Update(entity);

@@ -1,6 +1,6 @@
 ﻿using Application.Features.Category.Commands;
 using Application.Features.Category.Responses;
-using Application.Features.Product.Commands;
+using Application.Features.Product;
 using Application.Features.Product.Responses;
 using Application.Features.User.Commands;
 using Application.Features.User.Responses;
@@ -22,7 +22,7 @@ namespace Application.Mappings
             CreateMap<Domain.Entities.Category, CategoryResponse>();
 
 
-            CreateMap<CreateProductCommand, Domain.Entities.Product>();
+            CreateMap<CreateProduct, Domain.Entities.Product>();
 
             CreateMap<Domain.Entities.Product, ProductResponse>();
         }

@@ -7,26 +7,27 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Product.Querries
+namespace Application.Features.Product
+
 {
-    public class GetProductsQuerry : IRequest<List<ProductResponse>>
+    public class GetProducts : IRequest<List<ProductResponse>>
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 0;
         public List<int> IncludedCategories { get; set; }
     }
 
-    public class GetProductCommandHandler : IRequestHandler<GetProductsQuerry, List<ProductResponse>>
+    public class GetProductsHandler : IRequestHandler<GetProducts, List<ProductResponse>>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
-        public GetProductCommandHandler(IProductRepository ProductRepository, IMapper mapper)
+        public GetProductsHandler(IProductRepository ProductRepository, IMapper mapper)
         {
             _ProductRepository = ProductRepository;
             _mapper = mapper;
         }
 
-        public Task<List<ProductResponse>> Handle(GetProductsQuerry request, CancellationToken cancellationToken)
+        public Task<List<ProductResponse>> Handle(GetProducts request, CancellationToken cancellationToken)
         {
             var query = _ProductRepository.All();
             FilterByCategory(request, query);
@@ -34,7 +35,7 @@ namespace Application.Features.Product.Querries
             return Task.FromResult(response);
         }
 
-        private void FilterByCategory(GetProductsQuerry request, IQueryable<Domain.Entities.Product> query)
+        private void FilterByCategory(GetProducts request, IQueryable<Domain.Entities.Product> query)
         {
             if (request.IncludedCategories != null)
                 query = query.Where(q => request.IncludedCategories.Contains(q.CategoryId));

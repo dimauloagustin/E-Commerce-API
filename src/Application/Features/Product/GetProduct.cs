@@ -5,27 +5,26 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Product.Commands
+namespace Application.Features.Product
 {
-    public class DeleteProductCommand : BaseProductCommand, IRequest<ProductResponse>
+    public class GetProduct : IRequest<ProductResponse>
     {
         public int Id { get; set; }
     }
 
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, ProductResponse>
+    public class GetProductHandler : IRequestHandler<GetProduct, ProductResponse>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
-        public DeleteProductCommandHandler(IProductRepository ProductRepository, IMapper mapper)
+        public GetProductHandler(IProductRepository ProductRepository, IMapper mapper)
         {
             _ProductRepository = ProductRepository;
             _mapper = mapper;
         }
 
-        public Task<ProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public Task<ProductResponse> Handle(GetProduct request, CancellationToken cancellationToken)
         {
             var response = _ProductRepository.Find(request.Id);
-            _ProductRepository.Delete(response);
             return Task.FromResult(_mapper.Map<ProductResponse>(response));
         }
     }

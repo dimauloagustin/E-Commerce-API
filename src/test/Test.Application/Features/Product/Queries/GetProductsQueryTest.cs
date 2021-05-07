@@ -1,4 +1,4 @@
-﻿using Application.Features.Product.Querries;
+﻿using Application.Features.Product;
 using Application.Interfaces.Repositories;
 using Application.Mappings;
 using AutoMapper;
@@ -17,7 +17,7 @@ namespace Test.Application.Features.Products.Queries
         public void Should_get_all_products()
         {
             // Arrange
-            var command = new GetProductsQuerry();
+            var command = new GetProducts();
 
             var entity1 = new Product { Id = 1, Description = "test1", Name = "test1" };
             var entity2 = new Product { Id = 2, Description = "test2", Name = "test2" };
@@ -35,7 +35,7 @@ namespace Test.Application.Features.Products.Queries
             fakeRepo.Setup(m => m.All()).Returns(products);
 
             // Act
-            var res = Task.Run(() => new GetProductCommandHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
+            var res = Task.Run(() => new GetProductsHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
 
             // Assert
             fakeRepo.Verify(x => x.All(), Times.Once());

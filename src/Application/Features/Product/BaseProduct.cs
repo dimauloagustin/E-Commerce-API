@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Features.Product.Commands
+namespace Application.Features.Product
 {
-    public abstract class BaseProductCommand
+    public abstract class BaseProduct
     {
         [Required]
         public string Name { get; set; }
