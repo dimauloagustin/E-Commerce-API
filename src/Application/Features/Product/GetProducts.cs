@@ -30,15 +30,12 @@ namespace Application.Features.Product
         public Task<List<ProductResponse>> Handle(GetProducts request, CancellationToken cancellationToken)
         {
             var query = _ProductRepository.All();
-            FilterByCategory(request, query);
-            var response = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).Select(r => _mapper.Map<ProductResponse>(r)).ToList();
-            return Task.FromResult(response);
-        }
 
-        private void FilterByCategory(GetProducts request, IQueryable<Domain.Entities.Product> query)
-        {
             if (request.IncludedCategories != null)
                 query = query.Where(q => request.IncludedCategories.Contains(q.CategoryId));
+
+            var response = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).Select(r => _mapper.Map<ProductResponse>(r)).ToList();
+            return Task.FromResult(response);
         }
     }
 }
