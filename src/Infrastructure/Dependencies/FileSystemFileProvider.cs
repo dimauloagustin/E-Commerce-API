@@ -9,6 +9,6 @@ namespace Infrastructure.Dependencies
     {
         public bool Exists(string path) => Directory.Exists(path);
 
-        public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
+        public IDirectoryInfo CreateDirectory(string path) => new DirectoryInfoWrapper(Directory.CreateDirectory(path));
     }
 }

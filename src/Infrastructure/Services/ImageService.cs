@@ -34,7 +34,7 @@ namespace Infrastructure.Services
             string fileExtencion = Path.GetExtension(image.FileName);
             string fileName = Path.GetFileName(Guid.NewGuid().ToString() + '.' + fileExtencion);
 
-            using (FileStream stream = _fileStreamFactory.CreateFileStream(Path.Combine(path, fileName), FileMode.Create))
+            using (Stream stream = _fileStreamFactory.CreateFileStream(Path.Combine(path, fileName), FileMode.Create))
             {
                 await image.CopyToAsync(stream, cancellationToken);
             }

@@ -7,6 +7,6 @@ namespace Infrastructure.Dependencies
     [ExcludeFromCodeCoverage]
     public class RealFileStreamFactory : IFileStreamFactory
     {
-        public FileStream CreateFileStream(string path, FileMode mode) => new FileStream(path, mode);
+        public Stream CreateFileStream(string path, FileMode mode) => new FileStream(path, mode);
     }
 }

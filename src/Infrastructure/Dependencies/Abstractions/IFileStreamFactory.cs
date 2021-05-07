@@ -4,6 +4,6 @@ namespace Infrastructure.Dependencies.Abstractions
 {
     public interface IFileStreamFactory
     {
-        FileStream CreateFileStream(string path, FileMode mode);
+        Stream CreateFileStream(string path, FileMode mode);
     }
 }
