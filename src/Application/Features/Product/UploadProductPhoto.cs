@@ -16,18 +16,18 @@ namespace Application.Features.Product
     public class UploadProductPhotoHandler : IRequestHandler<UploadProductPhoto, string>
     {
         private readonly IImageService _imageService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public UploadProductPhotoHandler(IImageService imageService, IHttpContextAccessor httpContextAccessor)
+        private readonly ILinkProvider _linkProvider;
+        public UploadProductPhotoHandler(IImageService imageService, ILinkProvider linkProvider)
         {
             _imageService = imageService;
-            _httpContextAccessor = httpContextAccessor;
+            _linkProvider = linkProvider;
         }
 
         public async Task<string> Handle(UploadProductPhoto request, CancellationToken cancellationToken)
         {
             string urlResult = await _imageService.SaveFileAsync(request.File, cancellationToken);
 
-            return $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}" + urlResult;
+            return $"{_linkProvider.Scheme}://{_linkProvider.Host}" + urlResult;
         }
     }
 }
