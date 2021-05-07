@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Test.Application.Features.Products.Queries
 {
-    public class GetProductsQueryTest
+    public class GetProductsTest
     {
         [Fact]
         public void Should_get_all_products()
