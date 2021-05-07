@@ -1,22 +1,26 @@
 ﻿using Application.Features.Product;
+using Application.Features.Product.Responses;
 using Application.Interfaces.Repositories;
 using Application.Mappings;
 using AutoMapper;
 using Domain.Entities;
+using FluentAssertions;
 using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Test.Application.Features.Products
 {
-    public class UpdateProductTest
+    public class GetProductTest
     {
         [Fact]
-        public void Should_update_product()
+        public void Should_get_product()
         {
             // Arrange
-            var command = new UpdateProduct();
-            command.Id = 1;
+            var command = new GetProduct
+            {
+                Id = 1
+            };
 
             var entity = new Product { Id = 1, Description = "test1", Name = "test1" };
 
@@ -28,15 +32,14 @@ namespace Test.Application.Features.Products
             var mapper = mapperConfig.CreateMapper();
 
             var fakeRepo = new Mock<IProductRepository>();
-            fakeRepo.Setup(m => m.Update(It.IsAny<Product>())).Returns(1);
-            fakeRepo.Setup(m => m.Find(entity.Id)).Returns(entity);
+            fakeRepo.Setup(m => m.Find(command.Id)).Returns(entity);
 
             // Act
-            var res = Task.Run(() => new UpdateProductCommand(fakeRepo.Object, mapper).Handle(command, default)).Result;
+            var res = Task.Run(() => new GetProductHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
 
             // Assert
-            fakeRepo.Verify(x => x.Update(It.IsAny<Product>()), Times.Once());
-            fakeRepo.Verify(x => x.Find(entity.Id), Times.Once());
+            fakeRepo.Verify(x => x.Find(command.Id), Times.Once());
+            mapper.Map<ProductResponse>(entity).Should().BeEquivalentTo(res);
         }
     }
 }
