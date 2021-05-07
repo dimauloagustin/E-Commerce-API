@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using Infrastructure.Contexts;
 using Infrastructure.Repository.EfCore;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,8 @@ namespace Infrastructure.Extensions.ServiceBuilder
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ISessionRepository, SessionRepository>();
+
+            services.AddTransient<IImageService, ImageService>();
         }
     }
 }
