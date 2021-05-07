@@ -1,8 +1,7 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Hosting;
+﻿using Application.Interfaces.Services;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,31 +15,19 @@ namespace Application.Features.Product
 
     public class UploadProductPhotoHandler : IRequestHandler<UploadProductPhoto, string>
     {
-        private readonly IHostingEnvironment _environment;
+        private readonly IImageService _imageService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UploadProductPhotoHandler(IHostingEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        public UploadProductPhotoHandler(IImageService imageService, IHttpContextAccessor httpContextAccessor)
         {
-            _environment = environment;
+            _imageService = imageService;
             _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<string> Handle(UploadProductPhoto request, CancellationToken cancellationToken)
         {
-            string path = Path.Combine(_environment.WebRootPath, "Resourses", "Products");
+            string urlResult = await _imageService.SaveFileAsync(request.File, cancellationToken);
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            string fileName = Path.GetFileName(request.File.FileName);
-
-            using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
-            {
-                await request.File.CopyToAsync(stream, cancellationToken);
-            }
-
-            return $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}/Resourses/Products/" + request.File.FileName;
+            return $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}" + urlResult;
         }
     }
 }
