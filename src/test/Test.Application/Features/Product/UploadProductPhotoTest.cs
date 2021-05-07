@@ -1,45 +1,53 @@
 ﻿using Application.Features.Product;
-using Application.Interfaces.Repositories;
-using Application.Mappings;
-using AutoMapper;
-using Domain.Entities;
+using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Moq;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Application.Features.Products.Queries
+namespace Test.Application.Features.Products
 {
     public class UploadProductPhotoTest
     {
+        private readonly Mock<ILinkProvider> _linkProviderMock;
+        private readonly Mock<IImageService> _imageServiceMock;
+
+        public UploadProductPhotoTest()
+        {
+            _linkProviderMock = new Mock<ILinkProvider>();
+            _linkProviderMock.Setup(_ => _.Scheme).Returns("https");
+            _linkProviderMock.Setup(_ => _.Host).Returns("testhost");
+
+            _imageServiceMock = new Mock<IImageService>();
+            _imageServiceMock.Setup(_ => _.SaveFileAsync(It.IsAny<IFormFile>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult("/test/result"));
+        }
+
         [Fact]
-        public void Should_try_to_upload_the_photo()
+        public void Should_upload_the_photo()
         {
             // Arrange
-            var command = new GetProducts();
-
-            var entity1 = new Product { Id = 1, Description = "test1", Name = "test1" };
-            var entity2 = new Product { Id = 2, Description = "test2", Name = "test2" };
-            var entity3 = new Product { Id = 3, Description = "test3", Name = "test3" };
-            var products = new List<Product>() { entity1, entity2, entity3 }.AsQueryable();
-
-            var mapperConfig = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<GeneralProfile>();
-            });
-
-            var mapper = mapperConfig.CreateMapper();
-
-            var fakeRepo = new Mock<IProductRepository>();
-            fakeRepo.Setup(m => m.All()).Returns(products);
+            var command = new UploadProductPhoto();
 
             // Act
-            var res = Task.Run(() => new GetProductsHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
+            var res = Task.Run(() => new UploadProductPhotoHandler(_imageServiceMock.Object, _linkProviderMock.Object).Handle(command, default)).Result;
 
             // Assert
-            fakeRepo.Verify(x => x.All(), Times.Once());
-            Assert.Equal(products.Count(), res.Count);
+            _imageServiceMock.Verify(_ => _.SaveFileAsync(It.IsAny<IFormFile>(), It.IsAny<CancellationToken>()), Times.Once());
+        }
+
+        [Fact]
+        public void Should_return_link_to_the_photo()
+        {
+            // Arrange
+            var command = new UploadProductPhoto();
+
+            // Act
+            var res = Task.Run(() => new UploadProductPhotoHandler(_imageServiceMock.Object, _linkProviderMock.Object).Handle(command, default)).Result;
+
+            // Assert
+            Assert.Equal("https://testhost/test/result", res);
         }
     }
 }
