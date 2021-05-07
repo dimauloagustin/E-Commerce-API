@@ -2,7 +2,6 @@
 using Infrastructure.Dependencies.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 using System;
 using System.IO;
 using System.Threading;
@@ -13,12 +12,12 @@ namespace Infrastructure.Services
     public class ImageService : IImageService
     {
         private readonly IHostingEnvironment _environment;
-        private readonly IFileSystemProvider _fileProvieder;
+        private readonly IFileSystemProvider _fileProvider;
         private readonly IFileStreamFactory _fileStreamFactory;
-        public ImageService(IHostingEnvironment environment, IFileSystemProvider fileProvieder, IFileStreamFactory fileStreamFactory)
+        public ImageService(IHostingEnvironment environment, IFileSystemProvider fileProvider, IFileStreamFactory fileStreamFactory)
         {
             _environment = environment;
-            _fileProvieder = fileProvieder;
+            _fileProvider = fileProvider;
             _fileStreamFactory = fileStreamFactory;
         }
 
@@ -26,9 +25,9 @@ namespace Infrastructure.Services
         {
             string path = Path.Combine(_environment.WebRootPath, "Resourses", "Products");
 
-            if (!_fileProvieder.Exists(path))
+            if (!_fileProvider.Exists(path))
             {
-                _fileProvieder.CreateDirectory(path);
+                _fileProvider.CreateDirectory(path);
             }
 
             string fileExtencion = Path.GetExtension(image.FileName);
