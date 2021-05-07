@@ -29,16 +29,17 @@ namespace E_Commers.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
-        public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProduct product)
+        public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProduct createProduct)
         {
-            return Created(await Mediator.Send(product));
+            return Created(await Mediator.Send(createProduct));
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-        public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProduct product)
+        public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProduct updateProduct)
         {
-            return Ok(await Mediator.Send(product.Id = id));
+            updateProduct.Id = id;
+            return Ok(await Mediator.Send(updateProduct));
         }
 
         [HttpDelete("{id}")]
