@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Test.Application.Features.Products.Queries
+namespace Test.Application.Features.Products
 {
     public class GetProductsTest
     {
