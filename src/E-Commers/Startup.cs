@@ -1,6 +1,8 @@
 using Application;
+using Application.Interfaces.Services;
 using E_Commers.Errors.Extensions.ServiceBuilder;
 using Infrastructure.Extensions.ServiceBuilder;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -86,7 +88,7 @@ namespace E_Commers
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            //TODO - Add Authorization
 
             app.UseEndpoints(endpoints =>
             {

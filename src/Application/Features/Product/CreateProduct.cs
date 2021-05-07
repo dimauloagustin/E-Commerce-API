@@ -5,21 +5,21 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Product.Commands
+namespace Application.Features.Product
 {
-    public class CreateProductCommand : BaseProductCommand, IRequest<ProductResponse> { }
+    public class CreateProduct : BaseProduct, IRequest<ProductResponse> { }
 
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductResponse>
+    public class CreateProductHandler : IRequestHandler<CreateProduct, ProductResponse>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
-        public CreateProductCommandHandler(IProductRepository ProductRepository, IMapper mapper)
+        public CreateProductHandler(IProductRepository ProductRepository, IMapper mapper)
         {
             _ProductRepository = ProductRepository;
             _mapper = mapper;
         }
 
-        public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductResponse> Handle(CreateProduct request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Domain.Entities.Product>(request);
             var response = await _ProductRepository.AddAsync(entity);

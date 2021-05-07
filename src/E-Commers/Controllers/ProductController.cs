@@ -1,5 +1,4 @@
-﻿using Application.Features.Product.Commands;
-using Application.Features.Product.Querries;
+﻿using Application.Features.Product;
 using Application.Features.Product.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,41 +18,42 @@ namespace E_Commers.Controllers
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> GetProductAsync(int id)
         {
-            return Ok(await Mediator.Send(new GetProductCommand() { Id = id }));
+            return Ok(await Mediator.Send(new GetProduct() { Id = id }));
         }
 
         [HttpGet]
-        public async System.Threading.Tasks.Task<IActionResult> GetProductsAsync([FromQuery] GetProductsQuerry getProductsQuerry)
+        public async System.Threading.Tasks.Task<IActionResult> GetProductsAsync([FromQuery] GetProducts getProducts)
         {
-            return Ok(await Mediator.Send(getProductsQuerry));
+            return Ok(await Mediator.Send(getProducts));
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
-        public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProductCommand product)
+        public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProduct createProduct)
         {
-            return Created(await Mediator.Send(product));
+            return Created(await Mediator.Send(createProduct));
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-        public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProductCommand product)
+        public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProduct updateProduct)
         {
-            return Ok(await Mediator.Send(product.Id = id));
+            updateProduct.Id = id;
+            return Ok(await Mediator.Send(updateProduct));
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> DeleteProductAsync(int id)
         {
-            return Ok(await Mediator.Send(new DeleteProductCommand() { Id = id }));
+            return Ok(await Mediator.Send(new DeleteProduct() { Id = id }));
         }
 
         [HttpPost("image")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> UploadProductImageAsync(IFormFile image)
         {
-            return Ok(await Mediator.Send(new UploadProductPhotoQuerry() { File = image }));
+            return Ok(await Mediator.Send(new UploadProductPhoto() { File = image }));
         }
     }
 }

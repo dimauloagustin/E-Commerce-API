@@ -1,9 +1,5 @@
-using Application.Features.Product.Querries;
-using Application.Interfaces.Repositories;
-using Application.Mappings;
-using AutoMapper;
+using Application.Features.Product;
 using Domain.Entities;
-using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Repository.EfCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +16,7 @@ namespace Spv.ProjectName.Test.Application
         public void Should_work()
         {
             // Arrange
-            var command = new GetProductsQuerry();
+            var command = new GetProducts();
 
             var entity1 = new Product { Id = 1, Description = "test1", Name = "test1" };
             var entity2 = new Product { Id = 2, Description = "test2", Name = "test2" };
