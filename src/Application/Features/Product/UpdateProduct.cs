@@ -1,5 +1,4 @@
-﻿using Application.Features.Product.Responses;
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
@@ -8,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product
 {
-    public class UpdateProduct : BaseProduct, IRequest<ProductResponse>
+    public class UpdateProduct : BaseProduct, IRequest<Domain.Entities.Product>
     {
         [Required]
         public int Id { get; set; }
     }
 
-    public class UpdateProductCommand : IRequestHandler<UpdateProduct, ProductResponse>
+    public class UpdateProductCommand : IRequestHandler<UpdateProduct, Domain.Entities.Product>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
@@ -24,12 +23,12 @@ namespace Application.Features.Product
             _mapper = mapper;
         }
 
-        public Task<ProductResponse> Handle(UpdateProduct request, CancellationToken cancellationToken)
+        public Task<Domain.Entities.Product> Handle(UpdateProduct request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Domain.Entities.Product>(request);
             _ProductRepository.Update(entity);
             var response = _ProductRepository.Find(entity.Id);
-            return Task.FromResult(_mapper.Map<ProductResponse>(response));
+            return Task.FromResult(_mapper.Map<Domain.Entities.Product>(response));
         }
     }
 }

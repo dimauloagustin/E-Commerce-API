@@ -1,5 +1,4 @@
 ﻿using Application.Features.Product;
-using Application.Features.Product.Responses;
 using Application.Interfaces.Repositories;
 using Application.Mappings;
 using AutoMapper;
@@ -72,7 +71,7 @@ namespace Test.Application.Features.Products
             // Assert
             fakeRepo.Verify(x => x.All(), Times.Once());
             Assert.Single(res);
-            mapper.Map<ProductResponse>(entity1).Should().BeEquivalentTo(res.First());
+            mapper.Map<Product>(entity1).Should().BeEquivalentTo(res.First());
         }
     }
 }

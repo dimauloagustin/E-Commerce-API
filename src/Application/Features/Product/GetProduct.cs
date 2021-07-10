@@ -1,5 +1,4 @@
-﻿using Application.Features.Product.Responses;
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
 using System.Threading;
@@ -7,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product
 {
-    public class GetProduct : IRequest<ProductResponse>
+    public class GetProduct : IRequest<Domain.Entities.Product>
     {
         public int Id { get; set; }
     }
 
-    public class GetProductHandler : IRequestHandler<GetProduct, ProductResponse>
+    public class GetProductHandler : IRequestHandler<GetProduct, Domain.Entities.Product>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
@@ -22,10 +21,10 @@ namespace Application.Features.Product
             _mapper = mapper;
         }
 
-        public Task<ProductResponse> Handle(GetProduct request, CancellationToken cancellationToken)
+        public Task<Domain.Entities.Product> Handle(GetProduct request, CancellationToken cancellationToken)
         {
             var response = _ProductRepository.Find(request.Id);
-            return Task.FromResult(_mapper.Map<ProductResponse>(response));
+            return Task.FromResult(_mapper.Map<Domain.Entities.Product>(response));
         }
     }
 }

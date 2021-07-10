@@ -1,5 +1,4 @@
-﻿using Application.Features.User.Responses;
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.User.Commands
 {
-    public class UpdateUserCommand : IRequest<UserResponse>
+    public class UpdateUserCommand : IRequest<Domain.Entities.User>
     {
         [Required]
         public int Id { get; set; }
@@ -20,7 +19,7 @@ namespace Application.Features.User.Commands
         public string Pass { get; set; }
     }
 
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserResponse>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Domain.Entities.User>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -30,12 +29,12 @@ namespace Application.Features.User.Commands
             _mapper = mapper;
         }
 
-        public Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public Task<Domain.Entities.User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Domain.Entities.User>(request);
             _userRepository.Update(entity);
             var response = _userRepository.Find(entity.Id);
-            return Task.FromResult(_mapper.Map<UserResponse>(response));
+            return Task.FromResult(_mapper.Map<Domain.Entities.User>(response));
         }
     }
 }
