@@ -12,6 +12,7 @@ namespace Application.Mappings
             CreateMap<CreateUser, Domain.Entities.User>(); 
 
             CreateMap<CreateCategory, Domain.Entities.Category>();
+            CreateMap<UpdateCategory, Domain.Entities.Category>();
 
             CreateMap<CreateProduct, Domain.Entities.Product>();
             CreateMap<UpdateProduct, Domain.Entities.Product>();

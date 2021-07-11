@@ -10,20 +10,19 @@ using Xunit;
 
 namespace Test.Application.Features.Categories
 {
-    public class CreateCategoryTest
+    public class GetCategoryTest
     {
         [Fact]
-        public void Should_create_category_without_parent()
+        public void Should_get_category()
         {
             // Arrange
-            var command = new CreateCategory
-            { 
-                Name = "test category"
+            var command = new GetCategory
+            {
+                Id = 1
             };
 
-            var entity = new Category { Id = 1, Name = command.Name };
+            var entity = new Category { Id = 1, Name = "test category" };
 
-            //TODO - move mapper to fixture
             var mapperConfig = new MapperConfiguration(opts =>
             {
                 opts.AddProfile<GeneralProfile>();
@@ -32,13 +31,13 @@ namespace Test.Application.Features.Categories
             var mapper = mapperConfig.CreateMapper();
 
             var fakeRepo = new Mock<ICategoryRepository>();
-            fakeRepo.Setup(m => m.AddAsync(It.IsAny<Category>())).Returns(Task.FromResult(entity));
+            fakeRepo.Setup(m => m.Find(command.Id)).Returns(entity);
 
             // Act
-            var res = Task.Run(() => new CreateCategoryHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
+            var res = Task.Run(() => new GetCategoryHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
 
             // Assert
-            fakeRepo.Verify(x => x.AddAsync(It.IsAny<Category>()), Times.Once());
+            fakeRepo.Verify(x => x.Find(command.Id), Times.Once());
             mapper.Map<Category>(entity).Should().BeEquivalentTo(res);
         }
     }

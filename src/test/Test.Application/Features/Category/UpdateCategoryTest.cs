@@ -3,21 +3,21 @@ using Application.Interfaces.Repositories;
 using Application.Mappings;
 using AutoMapper;
 using Domain.Entities;
-using FluentAssertions;
 using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Test.Application.Features.Categories
 {
-    public class CreateCategoryTest
+    public class UpdateCategoryTest
     {
         [Fact]
-        public void Should_create_category_without_parent()
+        public void Should_update_category_without_parent()
         {
             // Arrange
-            var command = new CreateCategory
+            var command = new UpdateCategory
             { 
+                Id = 1,
                 Name = "test category"
             };
 
@@ -32,14 +32,15 @@ namespace Test.Application.Features.Categories
             var mapper = mapperConfig.CreateMapper();
 
             var fakeRepo = new Mock<ICategoryRepository>();
-            fakeRepo.Setup(m => m.AddAsync(It.IsAny<Category>())).Returns(Task.FromResult(entity));
+            fakeRepo.Setup(m => m.Update(It.IsAny<Category>())).Returns(entity.Id);
+            fakeRepo.Setup(m => m.Find(entity.Id)).Returns(entity);
 
             // Act
-            var res = Task.Run(() => new CreateCategoryHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
+            var res = Task.Run(() => new UpdateCategoryHandler(fakeRepo.Object, mapper).Handle(command, default)).Result;
 
             // Assert
-            fakeRepo.Verify(x => x.AddAsync(It.IsAny<Category>()), Times.Once());
-            mapper.Map<Category>(entity).Should().BeEquivalentTo(res);
+            fakeRepo.Verify(x => x.Update(It.IsAny<Category>()), Times.Once());
+            fakeRepo.Verify(x => x.Find(entity.Id), Times.Once());
         }
     }
 }
