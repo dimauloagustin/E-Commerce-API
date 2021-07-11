@@ -1,31 +1,32 @@
 ﻿using Application.Interfaces.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.User.Commands
+namespace Application.Commands.Users
 {
-    public class DeleteUserCommand : IRequest<Domain.Entities.User>
+    public class DeleteUser : IRequest<User>
     {
         public int Id { get; set; }
     }
 
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Domain.Entities.User>
+    public class DeleteUserHandler : IRequestHandler<DeleteUser, User>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public DeleteUserHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
         }
 
-        public Task<Domain.Entities.User> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public Task<User> Handle(DeleteUser request, CancellationToken cancellationToken)
         {
             var response = _userRepository.Find(request.Id);
             _userRepository.Delete(response);
-            return Task.FromResult(_mapper.Map<Domain.Entities.User>(response));
+            return Task.FromResult(_mapper.Map<User>(response));
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product
 {
-    public class CreateProduct : BaseProduct, IRequest<Domain.Entities.Product> { }
+    public class CreateProduct : BaseProductCommand, IRequest<Domain.Entities.Product> { }
 
     public class CreateProductHandler : IRequestHandler<CreateProduct, Domain.Entities.Product>
     {

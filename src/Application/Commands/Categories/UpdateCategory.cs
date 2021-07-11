@@ -1,13 +1,14 @@
 ﻿using Application.Interfaces.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Category.Commands
+namespace Application.Commands.Categories
 {
-    public class UpdateCategoryCommand : IRequest<Domain.Entities.Category>
+    public class UpdateCategory : IRequest<Category>
     {
         [Required]
         public int Id { get; set; }
@@ -16,22 +17,22 @@ namespace Application.Features.Category.Commands
         public int? ParentCategoryId { get; set; }
     }
 
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Domain.Entities.Category>
+    public class UpdateCategoryHandler : IRequestHandler<UpdateCategory, Category>
     {
         private readonly ICategoryRepository _CategoryRepository;
         private readonly IMapper _mapper;
-        public UpdateCategoryCommandHandler(ICategoryRepository CategoryRepository, IMapper mapper)
+        public UpdateCategoryHandler(ICategoryRepository CategoryRepository, IMapper mapper)
         {
             _CategoryRepository = CategoryRepository;
             _mapper = mapper;
         }
 
-        public Task<Domain.Entities.Category> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public Task<Category> Handle(UpdateCategory request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<Domain.Entities.Category>(request);
+            var entity = _mapper.Map<Category>(request);
             _CategoryRepository.Update(entity);
             var response = _CategoryRepository.Find(entity.Id);
-            return Task.FromResult(_mapper.Map<Domain.Entities.Category>(response));
+            return Task.FromResult(_mapper.Map<Category>(response));
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Application.Features.Product
 {
-    public abstract class BaseProduct
+    public abstract class BaseProductCommand
     {
         [Required]
         public string Name { get; set; }

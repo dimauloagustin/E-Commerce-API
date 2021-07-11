@@ -1,34 +1,35 @@
 ﻿using Application.Interfaces.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Category.Commands
+namespace Application.Commands.Categories
 {
-    public class CreateCategoryCommand : IRequest<Domain.Entities.Category>
+    public class CreateCategory : IRequest<Category>
     {
         [Required]
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
     }
 
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, Domain.Entities.Category>
+    public class CreateCategoryHandler : IRequestHandler<CreateCategory, Category>
     {
         private readonly ICategoryRepository _CategoryRepository;
         private readonly IMapper _mapper;
-        public CreateCategoryCommandHandler(ICategoryRepository CategoryRepository, IMapper mapper)
+        public CreateCategoryHandler(ICategoryRepository CategoryRepository, IMapper mapper)
         {
             _CategoryRepository = CategoryRepository;
             _mapper = mapper;
         }
 
-        public async Task<Domain.Entities.Category> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Category> Handle(CreateCategory request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<Domain.Entities.Category>(request);
+            var entity = _mapper.Map<Category>(request);
             var response = await _CategoryRepository.AddAsync(entity);
-            return _mapper.Map<Domain.Entities.Category>(response);
+            return _mapper.Map<Category>(response);
         }
     }
 }

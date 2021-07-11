@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product
 {
-    public class UpdateProduct : BaseProduct, IRequest<Domain.Entities.Product>
+    public class UpdateProduct : BaseProductCommand, IRequest<Domain.Entities.Product>
     {
         [Required]
         public int Id { get; set; }

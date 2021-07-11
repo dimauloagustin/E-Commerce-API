@@ -1,6 +1,6 @@
-﻿using Application.Features.Category.Commands;
+﻿using Application.Commands.Categories;
+using Application.Commands.Users;
 using Application.Features.Product;
-using Application.Features.User.Commands;
 using AutoMapper;
 
 namespace Application.Mappings
@@ -9,9 +9,9 @@ namespace Application.Mappings
     {
         public GeneralProfile()
         { 
-            CreateMap<CreateUserCommand, Domain.Entities.User>(); 
+            CreateMap<CreateUser, Domain.Entities.User>(); 
 
-            CreateMap<CreateCategoryCommand, Domain.Entities.Category>();
+            CreateMap<CreateCategory, Domain.Entities.Category>();
 
             CreateMap<CreateProduct, Domain.Entities.Product>();
             CreateMap<UpdateProduct, Domain.Entities.Product>();

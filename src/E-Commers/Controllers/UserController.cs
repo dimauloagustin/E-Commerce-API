@@ -1,4 +1,4 @@
-﻿using Application.Features.User.Commands;
+﻿using Application.Commands.Users;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +18,19 @@ namespace E_Commers.Controllers
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> GetUserAsync(int id)
         {
-            return Ok(await Mediator.Send(new GetUserCommand() { Id = id }));
+            return Ok(await Mediator.Send(new GetUser() { Id = id }));
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
-        public async System.Threading.Tasks.Task<IActionResult> PostUserAsync(CreateUserCommand user)
+        public async System.Threading.Tasks.Task<IActionResult> PostUserAsync(CreateUser user)
         {
             return Created(await Mediator.Send(user));
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-        public async System.Threading.Tasks.Task<IActionResult> UpdateUserAsync(int id, UpdateUserCommand user)
+        public async System.Threading.Tasks.Task<IActionResult> UpdateUserAsync(int id, UpdateUser user)
         {
             return Ok(await Mediator.Send(user.Id = id));
         }
@@ -39,7 +39,7 @@ namespace E_Commers.Controllers
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> DeleteUserAsync(int id)
         {
-            return Ok(await Mediator.Send(new DeleteUserCommand() { Id = id }));
+            return Ok(await Mediator.Send(new DeleteUser() { Id = id }));
         }
     }
 }

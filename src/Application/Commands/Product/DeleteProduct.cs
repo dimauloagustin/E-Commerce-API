@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product
 {
-    public class DeleteProduct : BaseProduct, IRequest<Domain.Entities.Product>
+    public class DeleteProduct : BaseProductCommand, IRequest<Domain.Entities.Product>
     {
         public int Id { get; set; }
     }
