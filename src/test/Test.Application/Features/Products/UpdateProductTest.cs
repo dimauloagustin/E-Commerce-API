@@ -28,8 +28,8 @@ namespace Test.Application.Features.Products
             var entity = new Product { Id = 1, Description = "test1", Name = "test1" };
 
             var fakeRepo = new Mock<IProductRepository>();
-            fakeRepo.Setup(m => m.Update(It.IsAny<Product>())).Returns(1);
             fakeRepo.Setup(m => m.Find(entity.Id)).Returns(entity);
+            fakeRepo.Setup(m => m.Update(It.IsAny<Product>())).Returns(1);
 
             // Act
             var res = Task.Run(() => new UpdateProductCommand(fakeRepo.Object, _mapper).Handle(command, default)).Result;

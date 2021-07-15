@@ -10,6 +10,7 @@ namespace Application.Mappings
         public GeneralProfile()
         { 
             CreateMap<CreateUser, Domain.Entities.User>(); 
+            CreateMap<UpdateUser, Domain.Entities.User>(); 
 
             CreateMap<CreateCategory, Domain.Entities.Category>();
             CreateMap<UpdateCategory, Domain.Entities.Category>();
