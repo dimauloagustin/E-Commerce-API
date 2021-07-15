@@ -1,8 +1,6 @@
 using Application;
-using Application.Interfaces.Services;
 using E_Commers.Errors.Extensions.ServiceBuilder;
 using Infrastructure.Extensions.ServiceBuilder;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +14,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers
 {
-    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)

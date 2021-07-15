@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers.Controllers
 {
-    [ExcludeFromCodeCoverage]
     [ApiController]
     [Produces("application/json")]
     [Route("[controller]")]
