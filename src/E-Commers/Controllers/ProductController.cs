@@ -1,12 +1,10 @@
 ﻿using Application.Features.Product;
-using Application.Features.Product.Responses;
+using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
 
 namespace E_Commers.Controllers
 {
-    [ExcludeFromCodeCoverage]
     [ApiController]
     [Produces("application/json")]
     [Route("[controller]")]
@@ -15,7 +13,7 @@ namespace E_Commers.Controllers
         public ProductController() { }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> GetProductAsync(int id)
         {
             return Ok(await Mediator.Send(new GetProduct() { Id = id }));
@@ -28,14 +26,14 @@ namespace E_Commers.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Product), StatusCodes.Status201Created)]
         public async System.Threading.Tasks.Task<IActionResult> PostProductAsync(CreateProduct createProduct)
         {
             return Created(await Mediator.Send(createProduct));
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> EditProductAsync(int id, UpdateProduct updateProduct)
         {
             updateProduct.Id = id;
@@ -43,7 +41,7 @@ namespace E_Commers.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         public async System.Threading.Tasks.Task<IActionResult> DeleteProductAsync(int id)
         {
             return Ok(await Mediator.Send(new DeleteProduct() { Id = id }));
