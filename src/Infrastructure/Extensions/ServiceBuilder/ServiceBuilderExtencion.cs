@@ -28,6 +28,7 @@ namespace Infrastructure.Extensions.ServiceBuilder
             services.AddTransient<ISessionRepository, SessionRepository>();
 
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IHashService, HashService>();
         }
     }
 }

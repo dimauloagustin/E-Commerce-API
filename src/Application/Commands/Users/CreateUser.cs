@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -22,14 +23,18 @@ namespace Application.Commands.Users
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public CreateUserHandler(IUserRepository userRepository, IMapper mapper)
+        private readonly IHashService _hashService;
+
+        public CreateUserHandler(IUserRepository userRepository, IMapper mapper, IHashService hashService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _hashService = hashService;
         }
 
         public async Task<User> Handle(CreateUser request, CancellationToken cancellationToken)
         {
+            request.Pass = _hashService.Hash(request.Pass);
             var entity = _mapper.Map<User>(request);
             var response = await _userRepository.AddAsync(entity);
             return _mapper.Map<User>(response);
