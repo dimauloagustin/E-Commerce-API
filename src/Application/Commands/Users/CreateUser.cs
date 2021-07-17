@@ -1,5 +1,4 @@
-﻿using Application.Features.User.Responses;
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities;
@@ -26,7 +25,7 @@ namespace Application.Commands.Users
         private readonly IMapper _mapper;
         private readonly IHashService _hashService;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IHashService hashService)
+        public CreateUserHandler(IUserRepository userRepository, IMapper mapper, IHashService hashService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -36,7 +35,7 @@ namespace Application.Commands.Users
         public async Task<User> Handle(CreateUser request, CancellationToken cancellationToken)
         {
             request.Pass = _hashService.Hash(request.Pass);
-            var entity = _mapper.Map<Domain.Entities.User>(request);
+            var entity = _mapper.Map<User>(request);
             var response = await _userRepository.AddAsync(entity);
             return _mapper.Map<User>(response);
         }

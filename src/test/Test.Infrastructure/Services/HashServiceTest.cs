@@ -18,7 +18,7 @@ namespace Test.Infrastructure.Services
         {
             // Arrange
             string pass = "new pass";
-            HashService service = new HashService();
+            var service = new HashService();
 
             // Act
             string hash = service.Hash(pass);
