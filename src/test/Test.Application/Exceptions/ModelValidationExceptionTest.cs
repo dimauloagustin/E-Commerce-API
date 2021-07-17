@@ -19,16 +19,6 @@ namespace Test.Application.Exceptions
             ValidationResults.Add(Error2);
         }
 
-
-        [Fact]
-        public void Should_create_empty_exception()
-        {
-            ModelValidationException ex = new ModelValidationException();
-
-            Assert.Equal(Message, ex.Message);
-        }
-
-
         [Fact]
         public void Should_serializate_correctly()
         {
