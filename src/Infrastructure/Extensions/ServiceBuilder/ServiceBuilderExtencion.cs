@@ -20,6 +20,7 @@ namespace Infrastructure.Extensions.ServiceBuilder
             services.AddTransient<ILinkProvider, LinkProvider>();
 
             services.AddDbContext<BasicDbContext>(options =>
+                //TODO - remove reference to startup project
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("E-Commers")));
 
             services.AddTransient<IUserRepository, UserRepository>();
